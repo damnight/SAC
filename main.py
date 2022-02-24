@@ -18,6 +18,12 @@ def make_deterministic_average():
 def get_array(filepath):
     return np.loadtxt(filepath)
 
+def make_det_avg():
+    deter_avg = make_deterministic_average()
+    stoch_replay = get_array('Experiments/3 Variable Hyperparameters/Stochastic vs Deterministc/Stochastic Replay/Hopper-v2-stoch_replay_deter.txt')
+    a = { 'deterministic average' : np.array(deter_avg),
+          'stochastic replay': np.array(stoch_replay)}
+    display_graph_det_avg(a)
 
 def display_graph_det_avg(dict):
     keys = list(dict.keys())
@@ -30,9 +36,27 @@ def display_graph_det_avg(dict):
     plt.title("Deterministic Average vs Stochastic Replay")
     plt.show()
 
+
+def make_default():
+    ant_def = get_array('Experiments/1 Default Hyperparameters/Ant Default/Ant_Default.txt')
+    cheetah_def = get_array('Experiments/1 Default Hyperparameters/HalfCheetah Default/HalfCheetah Default.txt')
+    hopper_def  = get_array('Experiments/1 Default Hyperparameters/Hopper Default/Hopper Default.txt')
+    humanoid_def = get_array('Experiments/1 Default Hyperparameters/Humanoid Default/Humanoid-v2 Default.txt')
+    walker2d_def = get_array('Experiments/1 Default Hyperparameters/Walker2d Default/Walker2d Default.txt')
+
+    plt.plot(ant_def, label='Ant', color='y')
+    plt.plot(cheetah_def, label='Half Cheetah', color='m')
+    plt.plot(hopper_def, label='Hopper', color='r')
+    plt.plot(humanoid_def, label='Humanoid', color='g')
+    plt.plot(walker2d_def, label='Walker 2D', color='b')
+
+    plt.xlabel("steps")
+    plt.ylabel("reward")
+    plt.legend(loc='upper left')
+    plt.title("SAC Default Hyperparameters")
+    plt.show()
+
 if __name__ == "__main__":
-    deter_avg = make_deterministic_average()
-    stoch_replay = get_array('Experiments/3 Variable Hyperparameters/Stochastic vs Deterministc/Stochastic Replay/Hopper-v2-stoch_replay_deter.txt')
-    a = { 'deterministic average' : np.array(deter_avg),
-          'stochastic replay': np.array(stoch_replay)}
-    display_graph_det_avg(a)
+    #make_det_avg()
+    #make_default()
+    make
