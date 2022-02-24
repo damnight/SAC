@@ -35,6 +35,7 @@ def display_graph_det_avg(dict):
     plt.legend(loc='upper left')
     plt.title("Deterministic Average vs Stochastic Replay")
     plt.show()
+    plt.savefig('Experiments/Figures/det_avg_stoch_replay.png')
 
 
 def make_default():
@@ -55,8 +56,34 @@ def make_default():
     plt.legend(loc='upper left')
     plt.title("SAC Default Hyperparameters")
     plt.show()
+    plt.savefig('Experiments/Figures/sac_default_params.png')
+
+def make_stoch_vs_det():
+    b1 = get_array('Experiments/3 Variable Hyperparameters/HopperBaselines/1/Hopper-v2-baseline1.txt')
+    b2 = get_array('Experiments/3 Variable Hyperparameters/HopperBaselines/2/Hopper-v2-baseline2.txt')
+    b3 = get_array('Experiments/3 Variable Hyperparameters/HopperBaselines/3/Hopper-v2-baseline3.txt')
+    b4 = get_array('Experiments/3 Variable Hyperparameters/HopperBaselines/4/Hopper-v2-baseline4.txt')
+    b5 = get_array('Experiments/3 Variable Hyperparameters/HopperBaselines/5/Hopper-v2-baseline5.txt')
+
+    #average arrays
+    stoch_avg = np.mean( np.array([ b1, b2, b3, b4, b5]), axis=0 )
+    a = open('Experiments/3 Variable Hyperparameters/Stochastic vs Deterministc/Stochastic Hopper Baseline/Hopper-v2-stoch_avg.txt', 'w')
+    np.savetxt(a, stoch_avg)
+    a.close()
+
+    det_avg = get_array('Experiments/3 Variable Hyperparameters/Stochastic vs Deterministc/Deterministic Hopper Baseline/Hopper-v2-det_avg.txt')
+
+    plt.plot(stoch_avg, label='stochastic average', color='r')
+    plt.plot(det_avg, label='deterministic average', color='c')
+    plt.xlabel("steps")
+    plt.ylabel("reward")
+    plt.legend(loc='upper left')
+    plt.title("stochastic vs deterministic training")
+    plt.show()
+    plt.savefig('Experiments/Figures/stoch_vs_det_train.png')
+
 
 if __name__ == "__main__":
     #make_det_avg()
     #make_default()
-    make
+    #make_stoch_vs_det()
